@@ -13,8 +13,8 @@
  *  - Button: PD2 (INT0) for wake-up interrupt
  *  - LCD: Connected via I2C (PCF8574 I/O Expander)
  * 
- * Author: Student
- * Date: 2026
+ * Author: Eyob Bantayehu ( CTC-2790-26 )
+ * Date: September, 2026
  */
 
 #define F_CPU 16000000UL
