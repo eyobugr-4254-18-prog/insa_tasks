@@ -14,8 +14,8 @@
  *  - PCF8574: I/O Expander at address 0x20
  *  - LCD: 16x2 LCD in 4-bit mode
  * 
- * Author: Student
- * Date: 2026
+ * Author: Eyob Bantayehu ( CTC-2790-26 )
+ * Date: September, 2026
  */
 
 #ifndef LCD_TEST_H_
