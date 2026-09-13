@@ -10,7 +10,7 @@
 #   make clean    - Remove build artifacts
 #
 # Prerequisites:
-#   - avr-gcc compiler suite
+#   - avr-gcc compiler
 #   - avrdude programming tool
 #   - Arduino board with ATmega328P
 #-----------------------------
