@@ -4,17 +4,18 @@
  * ATmega328P Sleep Mode Demonstration
  * 
  * This program demonstrates the ATmega328P sleep functionality:
- * - Normal operation with LED and LCD display
+ * - Normal operation with LED, BUZZER, and LCD display
  * - Entry into Power-down sleep mode
  * - Wake-up via external interrupt (INT0)
  * 
  * Hardware Configuration:
  *  - LED: PB0 (Port B, Pin 0)
+ *  - BUZZER: PB1 (Port B, Pin 1)
  *  - Button: PD2 (INT0) for wake-up interrupt
  *  - LCD: Connected via I2C (PCF8574 I/O Expander)
  * 
- * Author: Eyob Bantayehu ( CTC-2790-26 )
- * Date: September, 2026
+ * Author: Eyob Bantayehu
+ * Date: 2026
  */
 
 #define F_CPU 16000000UL
@@ -107,7 +108,7 @@ void go_to_sleep(void) {
  * Main program loop
  * 
  * Sequence:
- * 1. Initialize LED (PB0)
+ * 1. Initialize LED (PB0) and BUZZER (PB1)
  * 2. Configure external interrupt for wake-up button
  * 3. Initialize LCD display
  * 4. Loop:
@@ -116,11 +117,11 @@ void go_to_sleep(void) {
  *    - On wake-up: Display "WOKE UP", continue loop
  */
 int main(void) {
-    /* Configure PB0 (LED) as output */
-    DDRB |= (1 << PB0);
+    /* Configure PB0 (LED) and PB1 (BUZZER) as output */
+    DDRB |= (1 << PB0) | (1 << PB1);
     
-    /* Initialize LED to OFF state */
-    PORTB &= ~(1 << PB0);
+    /* Initialize LED and BUZZER to OFF state */
+    PORTB &= ~((1 << PB0) | (1 << PB1));
     
     /* Initialize external interrupt for wake-up */
     INT0_Init();
@@ -136,8 +137,8 @@ int main(void) {
             /* Clear flag for next interrupt */
             button_flag = 0;
             
-            /* Turn on LED */
-            PORTB |= (1 << PB0);
+            /* Turn on LED and BUZZER */
+            PORTB |= (1 << PB0) | (1 << PB1);
             
             /* Display active status on LCD */
             LCD_Print("LCD ACTIVE!!");
@@ -150,7 +151,7 @@ int main(void) {
             
             /* Prepare for sleep */
             LCD_Clear();
-            PORTB &= ~(1 << PB0);  /* Turn off LED before sleep */
+            PORTB &= ~((1 << PB0) | (1 << PB1));  /* Turn off LED and BUZZER before sleep */
             LCD_Off();              /* Turn off LCD before sleep */
             LCD_SetCursor(0, 0);
         }
@@ -162,7 +163,7 @@ int main(void) {
         LCD_On();
         LCD_SetCursor(0, 0);
         LCD_Print("WOKE UP!!");
-        delay_us(500);
+        delay_us(5000);
         LCD_Clear();
     }
     
